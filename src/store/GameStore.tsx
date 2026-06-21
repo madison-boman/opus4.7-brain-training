@@ -147,7 +147,8 @@ const buildDailies = (): DailyChallenge[] => {
       emoji: '🌓',
     },
   ];
-  return shuffle(pool)
+  const visibleIds = new Set(VISIBLE_GAMES.map((g) => g.id));
+  return shuffle(pool.filter((p) => visibleIds.has(p.gameId)))
     .slice(0, 3)
     .map((p) => ({ ...p, progress: 0, completed: false }));
 };
