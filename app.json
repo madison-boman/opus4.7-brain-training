@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "NeuroNova",
+    "slug": "neuronova",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "neuronova",
+    "newArchEnabled": false,
+    "splash": {
+      "backgroundColor": "#0B0B1F",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.neuronova.app"
+    },
+    "android": {
+      "package": "com.neuronova.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0B1F"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [],
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}
