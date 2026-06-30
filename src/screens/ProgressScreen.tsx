@@ -7,7 +7,7 @@ import LineChart from '../components/LineChart';
 import ScreenWrapper from '../components/ScreenWrapper';
 import SectionHeader from '../components/SectionHeader';
 import SkillRadar from '../components/SkillRadar';
-import { GAMES, gameById, SKILL_META, SkillKey } from '../data/games';
+import { VISIBLE_GAMES, gameById, SKILL_META, SkillKey } from '../data/games';
 import { useGameStore } from '../store/GameStore';
 import { gradients, palette, radii, typography } from '../theme';
 import { formatNumber, prettyDate } from '../utils/helpers';
@@ -43,7 +43,7 @@ const ProgressScreen: React.FC = () => {
   }, [store.sessions]);
 
   const gamePerformance = useMemo(() => {
-    return GAMES.map((g) => {
+    return VISIBLE_GAMES.map((g) => {
       const sessions = store.sessions.filter((s) => s.gameId === g.id);
       const avg = sessions.length === 0 ? 0 : sessions.reduce((a, s) => a + s.score, 0) / sessions.length;
       const best = store.bestScores[g.id] ?? 0;

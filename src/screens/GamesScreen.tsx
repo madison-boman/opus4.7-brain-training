@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import GradientCard from '../components/GradientCard';
 import ScreenWrapper from '../components/ScreenWrapper';
-import { GAMES, SKILL_META, SkillKey } from '../data/games';
+import { VISIBLE_GAMES, SKILL_META, SkillKey } from '../data/games';
 import { useGameStore } from '../store/GameStore';
 import { gradients, palette, radii, shadow, typography } from '../theme';
 import { RootStackParamList } from '../navigation/types';
@@ -27,15 +27,15 @@ const GamesScreen: React.FC = () => {
   const [filter, setFilter] = useState<'all' | SkillKey>('all');
 
   const filtered = filter === 'all'
-    ? GAMES
-    : GAMES.filter((g) => g.primarySkill === filter || g.secondarySkill === filter);
+    ? VISIBLE_GAMES
+    : VISIBLE_GAMES.filter((g) => g.primarySkill === filter || g.secondarySkill === filter);
 
   return (
     <ScreenWrapper>
       <View>
         <Text style={typography.tiny}>{' '}</Text>
         <Text style={styles.title}>Training Arena</Text>
-        <Text style={styles.subtitle}>5 games · Sharpen every cognitive skill</Text>
+        <Text style={styles.subtitle}>{VISIBLE_GAMES.length} games · Sharpen every cognitive skill</Text>
       </View>
 
       {/* Skill filter chips */}

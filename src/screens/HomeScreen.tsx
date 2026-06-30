@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { GAMES, gameById, SKILL_META, SkillKey } from '../data/games';
+import { VISIBLE_GAMES, gameById, SKILL_META, SkillKey } from '../data/games';
 import { useGameStore } from '../store/GameStore';
 import { gradients, palette, radii, shadow, typography } from '../theme';
 import { formatNumber } from '../utils/helpers';
@@ -28,8 +28,8 @@ const HomeScreen: React.FC = () => {
       (a, b) => a[1] - b[1],
     );
     const weakest = skillEntries[0]?.[0];
-    return GAMES.filter((g) => g.unlockLevel <= store.level && g.primarySkill === weakest)
-      .concat(GAMES.filter((g) => g.unlockLevel <= store.level))
+    return VISIBLE_GAMES.filter((g) => g.unlockLevel <= store.level && g.primarySkill === weakest)
+      .concat(VISIBLE_GAMES.filter((g) => g.unlockLevel <= store.level))
       .slice(0, 3);
   }, [store.skills, store.level]);
 

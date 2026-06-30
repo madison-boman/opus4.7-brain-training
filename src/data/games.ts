@@ -32,6 +32,7 @@ export interface GameMeta {
   unlockLevel: number;
   bestScore?: number;
   difficultyTiers: string[];
+  hidden?: boolean;
 }
 
 export const GAMES: GameMeta[] = [
@@ -86,6 +87,7 @@ export const GAMES: GameMeta[] = [
     secondarySkill: 'focus',
     unlockLevel: 2,
     difficultyTiers: ['Easy', 'Steady', 'Sharp', 'Genius'],
+    hidden: true,
   },
   {
     id: 'mathSprint',
@@ -99,8 +101,14 @@ export const GAMES: GameMeta[] = [
     secondarySkill: 'reaction',
     unlockLevel: 3,
     difficultyTiers: ['Warmup', 'Sprint', 'Marathon', 'Inferno'],
+    hidden: true,
   },
 ];
+
+// Games surfaced in the UI. `GAMES` stays the full catalog so any saved
+// references (sessions, achievements, gameById) keep resolving even when a
+// game is hidden.
+export const VISIBLE_GAMES: GameMeta[] = GAMES.filter((g) => !g.hidden);
 
 export const gameById = (id: GameId): GameMeta =>
   GAMES.find((g) => g.id === id)!;

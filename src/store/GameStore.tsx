@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { ACHIEVEMENTS, AchievementDef } from '../data/achievements';
-import { GAMES, GameId, SkillKey } from '../data/games';
+import { VISIBLE_GAMES, GameId, SkillKey } from '../data/games';
 import {
   daysAgoKey,
   levelFromXp,
@@ -68,7 +68,7 @@ const seedHistory = (): SkillSnapshot[] => {
 
 const seedSessions = (): GameSession[] => {
   const samples: GameSession[] = [];
-  const ids = GAMES.map((g) => g.id);
+  const ids = VISIBLE_GAMES.map((g) => g.id);
   for (let i = 0; i < 12; i++) {
     const gameId = ids[Math.floor(Math.random() * ids.length)];
     const tier = Math.floor(Math.random() * 3);
@@ -147,7 +147,8 @@ const buildDailies = (): DailyChallenge[] => {
       emoji: '🌓',
     },
   ];
-  return shuffle(pool)
+  const visibleIds = new Set(VISIBLE_GAMES.map((g) => g.id));
+  return shuffle(pool.filter((p) => visibleIds.has(p.gameId)))
     .slice(0, 3)
     .map((p) => ({ ...p, progress: 0, completed: false }));
 };
@@ -374,7 +375,7 @@ export const GameStoreProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         state.sessions.filter((s) => s.date === today).map((s) => s.gameId),
       );
       playedTodayIds.add(payload.gameId);
-      if (playedTodayIds.size >= GAMES.length) tryUnlock('completionist');
+      if (playedTodayIds.size >= VISIBLE_GAMES.length) tryUnlock('completionist');
 
       const trophies = state.trophies + unlocked.length;
 
